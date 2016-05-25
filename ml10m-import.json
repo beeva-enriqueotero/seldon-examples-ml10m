@@ -1,0 +1,36 @@
+{
+    "kind": "Job",
+    "apiVersion": "batch/v1",
+    "metadata": {
+        "name": "ml10m-import"
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "name": "ml10m-import"
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "data-volume",
+                        "hostPath": {"path": "/seldon-data"}
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "ml10m-create",
+                        "image": "beevaenriqueotero/seldon-examples-ml10m",
+                        "command": ["/create_ml10m_recommender.sh"],
+                        "volumeMounts": [
+                            {
+                                "name": "data-volume",
+                                "mountPath": "/seldon-data"
+                            }
+                        ]
+                    }
+                ],
+                "restartPolicy": "Never"
+            }
+        }
+    }
+}
