@@ -29,22 +29,22 @@ function create_csv {
 
 function setup_client {
 
-    seldon-cli client --action setup --client-name ml10M100K --db-name ClientDB
-    seldon-cli attr --action apply --client-name ml10M100K --json attr.json
-    seldon-cli import --action items --client-name ml10M100K --file-path items.csv
-    seldon-cli import --action users --client-name ml10M100K --file-path users.csv
-    seldon-cli import --action actions --client-name ml10M100K --file-path actions.csv
+    seldon-cli client --action setup --client-name ml10m100k --db-name ClientDB
+    seldon-cli attr --action apply --client-name ml10m100k --json attr.json
+    seldon-cli import --action items --client-name ml10m100k --file-path items.csv
+    seldon-cli import --action users --client-name ml10m100k --file-path users.csv
+    seldon-cli import --action actions --client-name ml10m100k --file-path actions.csv
 }
 
 function build_model {
 
-    luigi --module seldon.luigi.spark SeldonMatrixFactorization --local-schedule --client ml10M100K --startDay 1
+    luigi --module seldon.luigi.spark SeldonMatrixFactorization --local-schedule --client ml10m100k --startDay 1
 
 }
 
 function configure_runtime_scorer {
 
-    cat <<EOF | seldon-cli rec_alg --action create --client-name ml10M100K -f -
+    cat <<EOF | seldon-cli rec_alg --action create --client-name ml10m100k -f -
 {
     "defaultStrategy": {
         "algorithms": [
@@ -66,7 +66,7 @@ function configure_runtime_scorer {
     "recTagToStrategy": {}
 }
 EOF
-    seldon-cli rec_alg --action commit --client-name ml10M100K
+    seldon-cli rec_alg --action commit --client-name ml10m100k
 }
 
 function create_recommender {
