@@ -29,7 +29,7 @@ function create_csv {
 
 function setup_client {
 
-    seldon-cli client --action setup --client-name ml10m100k --db-name ClientDB10m
+    seldon-cli client --action setup --client-name ml10m100k --db-name ClientDB
     seldon-cli attr --action apply --client-name ml10m100k --json attr.json
     seldon-cli import --action items --client-name ml10m100k --file-path items.csv
     seldon-cli import --action users --client-name ml10m100k --file-path users.csv
